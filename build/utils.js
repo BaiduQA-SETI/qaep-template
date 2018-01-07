@@ -3,7 +3,7 @@ const path = require('path')
 const config = require('../config')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const packageConfig = require('../package.json')
-
+const glob = require('glob')
 exports.assetsPath = function (_path) {
     const assetsSubDirectory = process.env.NODE_ENV === 'production' ?
         config.build.assetsSubDirectory :
@@ -100,4 +100,46 @@ exports.createNotifierCallback = () => {
             icon: path.join(__dirname, 'logo.png')
         })
     }
+}
+
+/**
+ * 获取入口文件名列表
+ * @return {Array} 入口名数组
+ */
+exports.getPageList = () => {
+    return glob.sync(path.resolve(process.cwd(), 'src/view/*')).map((item) => {
+        return path.parse(item).name
+    })
+}
+
+/**
+ * 获取入口文件名列表
+ * @return {Array} 入口名数组
+ * 如果包含，  --all 
+ */
+exports.getEntryList = (key) => {
+    let list = {}
+    glob.sync(path.resolve(process.cwd(), 'src/view/*/index.js')).forEach((item) => {
+        const name = path.parse(path.dirname(item)).name
+        if (key == '--all' || key.indexOf(name) != -1) {
+            list[name] = item
+        }
+
+    })
+    return list
+}
+
+/**
+ * 获取指定路径下的入口文件
+ * @param  {String} globPath 通配符路径
+ * @return {Object}          入口名:路径 键值对
+ */
+exports.getEntries = (globPath) => {
+    const files = glob.sync(exports.rootPath(globPath))
+    const entries = {}
+    files.forEach(function (filepath) {
+        const dirname = path.dirname(path.relative('src/dep/', filepath))
+        entries[dirname] = filepath
+    })
+    return entries
 }

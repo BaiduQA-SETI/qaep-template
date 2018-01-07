@@ -3,6 +3,12 @@ const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
+const glob = require('glob')
+const argv = require('yargs').argv
+const {
+    getPageList,
+    getEntryList
+} = require('./utils')
 
 function resolve(dir) {
     return path.join(__dirname, '..', dir)
@@ -21,9 +27,6 @@ const createLintingRule = () => ({
 
 module.exports = {
     context: path.resolve(__dirname, '../'),
-    entry: {
-        app: './src/main.js'
-    },
     output: {
         path: config.build.assetsRoot,
         filename: '[name].js',
@@ -54,8 +57,8 @@ module.exports = {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
                 loader: 'url-loader',
                 options: {
-                    limit: 10000,
-                    name: utils.assetsPath('img/[name].[hash:7].[ext]')
+                    limit: 2000,
+                    name: utils.assetsPath('img/[name].[ext]')
                 }
             },
             {
@@ -63,7 +66,7 @@ module.exports = {
                 loader: 'url-loader',
                 options: {
                     limit: 10000,
-                    name: utils.assetsPath('media/[name].[hash:7].[ext]')
+                    name: utils.assetsPath('media/[name].[ext]')
                 }
             },
             {
@@ -71,7 +74,7 @@ module.exports = {
                 loader: 'url-loader',
                 options: {
                     limit: 10000,
-                    name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
+                    name: utils.assetsPath('fonts/[name].[ext]')
                 }
             },
             {

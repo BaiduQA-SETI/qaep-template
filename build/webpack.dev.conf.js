@@ -7,10 +7,10 @@ const baseWebpackConfig = require('./webpack.base.conf')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
-
+const argv = require('yargs').argv
+const cwd = process.cwd()
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
-
 const devWebpackConfig = merge(baseWebpackConfig, {
     module: {
         rules: utils.styleLoaders({
@@ -18,6 +18,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
             usePostCSS: true
         })
     },
+    entry: utils.getEntryList('--all'),
     // cheap-module-eval-source-map is faster for development
     devtool: config.dev.devtool,
 
@@ -30,12 +31,10 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         host: HOST || config.dev.host,
         port: PORT || config.dev.port,
         open: config.dev.autoOpenBrowser,
-        overlay: config.dev.errorOverlay ?
-            {
-                warnings: false,
-                errors: true
-            } :
-            false,
+        overlay: config.dev.errorOverlay ? {
+            warnings: false,
+            errors: true
+        } : false,
         publicPath: config.dev.assetsPublicPath,
         proxy: config.dev.proxyTable,
         quiet: true, // necessary for FriendlyErrorsPlugin
@@ -51,12 +50,19 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         new webpack.NamedModulesPlugin(), // HMR shows correct file names in console on update.
         new webpack.NoEmitOnErrorsPlugin(),
         // https://github.com/ampedandwired/html-webpack-plugin
-        new HtmlWebpackPlugin({
-            filename: 'index.html',
-            template: 'index.html',
-            inject: true
-        }),
-    ]
+    ].concat(
+        utils.getPageList().map(name => {
+            return new HtmlWebpackPlugin({
+                // 生成出来的html文件名
+                filename: `${name}.html`,
+                // 每个html的模版，这里多个页面使用同一个模版
+                template: `html-withimg-loader?min=false!${cwd}/src/view/${name}/index.html`,
+                inject: true,
+                // 每个html引用的js模块，也可以在这里加上vendor等公用模块
+                chunks: [name]
+            })
+        })
+    )
 })
 
 module.exports = new Promise((resolve, reject) => {
@@ -76,8 +82,7 @@ module.exports = new Promise((resolve, reject) => {
                     messages: [`Your application is running here: http://${devWebpackConfig.devServer.host}:${port}`],
                 },
                 onErrors: config.dev.notifyOnErrors ?
-                    utils.createNotifierCallback() :
-                    undefined
+                    utils.createNotifierCallback() : undefined
             }))
 
             resolve(devWebpackConfig)

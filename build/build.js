@@ -10,13 +10,35 @@ const chalk = require('chalk')
 const webpack = require('webpack')
 const config = require('../config')
 const webpackConfig = require('./webpack.prod.conf')
-
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const merge = require('webpack-merge')
+const utils = require('./utils')
+const argv = require('yargs').command('npm run build <page> <-all>', '构建页面')
+    .demandCommand(
+        1,
+        `😂  ${chalk.bgRed('请指定页面名')}  ${chalk.green(`可选值:【${utils.getPageList()}】\n`)}`
+    ).argv._
 const spinner = ora('building for production...')
 spinner.start()
-
-rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
-    if (err) throw err
-    webpack(webpackConfig, (err, stats) => {
+rm.sync(path.join(config.build.assetsRoot, config.build.assetsSubDirectory))
+argv.forEach((item, index) => {
+    webpack(merge(webpackConfig, {
+        entry: utils.getEntryList(item),
+        output: {
+            path: config.build.assetsRoot + '/' + item,
+            filename: utils.assetsPath('[name].js'),
+            chunkFilename: utils.assetsPath('[id].js')
+        },
+        plugins: webpackConfig.plugins.concat(new HtmlWebpackPlugin({
+            filename: process.env.NODE_ENV === 'testing' ?
+                'index.html' : path.resolve(process.cwd(), `dist/${item}/index.html`),
+            template: `html-withimg-loader?min=false!${process.cwd()}/src/view/${item}/index.html`,
+            inject: true,
+            minify: false,
+            // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+            chunksSortMode: 'dependency'
+        }))
+    }), (err, stats) => {
         spinner.stop()
         if (err) throw err
         process.stdout.write(stats.toString({
