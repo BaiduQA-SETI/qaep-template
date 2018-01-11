@@ -1,2 +1,1 @@
-import '@/view/index/index.css'
-// alert(1121);
+import './index.css'
