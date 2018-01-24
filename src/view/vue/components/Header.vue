@@ -4,7 +4,7 @@
             <img class="logo" src="http://titans.baidu.com/img/titans_logo.png" />
         </router-link>
         <ul class="header-nav">
-            <router-link class="nav-item" v-for="item in list" tag="li" :to="'/' + item.id">{{item.name}}</router-link>
+            <router-link class="nav-item" :key="item.id" v-for="item in list" tag="li" :to="'/' + item.id">{{item.name}}</router-link>
         </ul>
         <div class="user-help">
             <span>liushaopeng</span>
