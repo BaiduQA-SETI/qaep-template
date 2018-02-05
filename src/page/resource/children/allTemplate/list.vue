@@ -18,7 +18,7 @@
                 </el-date-picker>
             </el-form-item>
             <el-form-item>
-                <el-button v- @click="pageinfo.page = 1, getList()" type="primary" element-loading-background="rgba(0, 0, 0, 0.8)" v-loading.fullscreen.lock="fullscreenLoading">查询</el-button>
+                <el-button @click="pageinfo.page = 1, getList()" type="primary" element-loading-background="rgba(0, 0, 0, 0.8)" v-loading.fullscreen.lock="fullscreenLoading">查询</el-button>
             </el-form-item>
         </el-form>
         <div class="list-wrap">
