@@ -3,6 +3,9 @@
 const path = require('path')
 
 module.exports = {
+    base: {
+        onePage: true, //是否为单页应用
+    },
     dev: {
 
         // Paths
@@ -10,14 +13,13 @@ module.exports = {
         assetsPublicPath: '/',
         proxyTable: {
             '/': {
-                target: 'http://toos.baidu.com/', // 你接口的域名
-                secure: false,
-                changeOrigin: false,
+                target: 'http://toos.baidu.com', // 你接口的域名
+                secure: true,
+                changeOrigin: true
             }
         },
         // Various Dev Server settings
-        host: 'localhost', // can be overwritten by process.env.HOST
-        port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+        port: 1316, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
         autoOpenBrowser: false,
         errorOverlay: true,
         notifyOnErrors: true,

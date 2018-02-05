@@ -1,5 +1,7 @@
 import fetch from './fetch'
 
+export const getUser = () => fetch('/user/current', {});
+
 /**
  * 
  * @param {*} cityid 

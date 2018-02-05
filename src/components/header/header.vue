@@ -1,7 +1,7 @@
 <template>
-    <header>
+    <div class="header">
         <router-link to="home">
-            <img class="logo" src="http://titans.baidu.com/img/titans_logo.png" />
+            <img class="logo" src="http://xstp.baidu.com/assets/common/directive/componentDT/headerDT/img/logo.png" />
         </router-link>
         <ul class="header-nav">
             <router-link class="nav-item" :key="item.id" v-for="item in list" tag="li" :to="'/' + item.id">{{item.name}}</router-link>
@@ -10,9 +10,9 @@
             <span>liushaopeng</span>
             <span>|</span>
             <a href="http://wiki.baidu.com/pages/viewpage.action?pageId=210683356">帮助</a>
-            <img src="../img/git.png" />
+            <img src="@/img/git.png" />
         </div>
-    </header>
+    </div>
 </template>
 <script>
     export default {
@@ -22,21 +22,18 @@
                     name: '首页',
                     id: 'home'
                 }, {
-                    name: '控制台',
-                    id: 'workspace'
-                }, {
-                    name: '合作与生态',
-                    id: 'collaborate'
+                    name: '资源管理',
+                    id: 'resource'
                 }]
             }
-        }
+        },
     }
 
 </script>
 <style lang="scss" scoped>
-    header {
-        height: 50px;
-        background: #437e9d;
+    .header {
+        height: 60px;
+        background: #0c6922;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -51,7 +48,7 @@
                 color: #fff;
                 min-width: 90px;
                 text-align: center;
-                line-height: 50px;
+                line-height: 60px;
                 cursor: pointer;
             }
             .nav-item.active {
@@ -62,6 +59,7 @@
         .user-help {
             display: flex;
             color: #fff;
+            margin-right: 80px;
             * {
                 margin: 0 5px;
             }
