@@ -57,7 +57,7 @@
                     resourceType: 'all',
                     productId: 'all'
                 },
-                fullscreenLoading: false,
+                fullscreenLoading: true,
                 statusList: [],
                 pageinfo: {
                     totalcount: 1
