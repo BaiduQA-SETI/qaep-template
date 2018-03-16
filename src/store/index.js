@@ -7,7 +7,7 @@ import getters from './getters'
 Vue.use(Vuex)
 
 const state = {
-	aabbb : 'lishaopeng',
+	name : 'lishaopeng',
 	removeAddress: ''
 }
 

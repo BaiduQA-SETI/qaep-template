@@ -19,7 +19,6 @@
 
 <script>
     import {
-        mapState,
         mapActions
     } from 'vuex'
     import Header from '@/components/header/header.vue'
@@ -30,17 +29,9 @@
             'vHeader': Header,
             'vSidebar': Sidebar
         },
-        computed: {
-            ...mapState([
-                'aabbb'
-            ]),
-        },
+        computed: {},
         mounted() {
-            $(window).resize(() => {
-                // console.log($('body').width())
-
-                console.log($('.el-form').css('width'));
-            })
+            $(window).resize(() => {})
         },
         data() {
             return {
@@ -82,15 +73,11 @@
 
     .el-main {
         height: calc(100vh - 60px);
-    }
-
-
-    // .el-container {
+    } // .el-container {
     //     overflow: auto;
     //     border-left: 2px solid #e6e7e4;
     // }
-
-    .aaaaaa{
+    .aaaaaa {
         border-left: 2px solid #e6e7e4;
     }
 

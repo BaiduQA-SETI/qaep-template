@@ -24,9 +24,6 @@
                 }, {
                     name: '资源管理',
                     id: 'resource'
-                },{
-                    name: '工作台',
-                    id: 'workspace'
                 }]
             }
         },
