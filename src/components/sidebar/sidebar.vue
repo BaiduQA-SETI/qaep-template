@@ -30,6 +30,7 @@
 </script>
 
 <style lang="scss" scoped>
+    @import '~@/style/common';
     .menu {
         font-size: 16px;
         border-bottom: dashed 1px #e6e7e4;

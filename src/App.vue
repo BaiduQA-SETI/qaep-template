@@ -16,15 +16,15 @@
             //     console.log(res)
             // })
 
-            $.ajax({
-                url : '/user/',
-                contentType: 'application/json',
-                method: 'get',
-                async: false,
-                success(rs){
-                    console.log(rs);
-                }
-            });
+            // $.ajax({
+            //     url : '/user/',
+            //     contentType: 'application/json',
+            //     method: 'get',
+            //     async: false,
+            //     success(rs){
+            //         console.log(rs);
+            //     }
+            // });
             // window.location.href = 'https://itebeta.baidu.com/login?service=http://xstpdev.baidu.com:3012/vue.html&appKey=uuapTestKey'
             // setTimeout(() => {
             // $.ajax({
